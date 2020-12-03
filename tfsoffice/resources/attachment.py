@@ -26,6 +26,11 @@ class Attachment:
             filetype = 'Png'
         elif path.lower().endswith('.tif') or path.lower().endswith('.tiff'):
             filetype = 'Tiff'
+        elif path.lower().endswith('.pdf'):
+            # according to TFSO documentation, (https://webservices.24sevenoffice.com/Economy/Accounting/Accounting_V001/AttachmentService.asmx?op=Save)
+            # pdf files should be supportable using the exact same SOAP api as other types
+            # of page images
+            filetype = 'Pdf'
         else:
             raise AttributeError('Filetype not supported')
 
