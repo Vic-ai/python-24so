@@ -9,7 +9,7 @@ class AccountsV3:
 
     # NOTE - save_option 0 (and direct_ledger and allow_difference)
     # For _Posting_ invoices directly to General Ledger
-    def save_entries_to_ledger(self, entries, images=[], bundle_prefix='AI', location='Journal', bundle_name=None, transaction_type_no=1, entry_series_id=3):
+    def save_entries_to_ledger(self, entries, images=[], bundle_prefix='AI', location='Journal', bundle_name=None, transaction_type_no=1, entry_series_id=3, options={}):
         """
         POST entries
         """
@@ -24,7 +24,7 @@ class AccountsV3:
         year = int(year[0])
 
         data = dict(
-            ignore_warnings=True,
+            ignored_warnings=options.get('ignored_warnings', []),
             allow_difference=False,
             direct_ledger=True,
             save_option=0,  # direct to ledger
@@ -90,7 +90,14 @@ class AccountsV3:
         # Note that this could miss some warnings or errors, perhaps including
         # rounding errors, but we won't know until this is tested against their
         # service.
-        bundlelist.IgnoreWarnings = data.get('ignore_warnings', True)
+
+        ignored_warnings = data.get('ignored_warnings', [])
+
+        if len(ignored_warnings) > 0:
+            ignored_warning_strings = api.factory.create('ArrayOfString')
+            ignored_warning_strings.string.extend(ignored_warnings)
+
+            bundlelist.IgnoreWarnings = ignored_warning_strings
 
         # Allow difference in credit/debit balance.
         # This is only applicable when saving journal data (see SaveOption) below.
