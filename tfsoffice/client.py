@@ -87,7 +87,7 @@ class Client:
             'https://webservices.24sevenoffice.com/economy/accountV002/' +
             'AccountService.asmx?WSDL',
         'AccountVersionThree':
-            'https://webservices.24sevenoffice.com/Economy/Account/V003/' +
+            'https://api-beta.24sevenoffice.com/Economy/Account/V003/' +
             'AccountService.asmx?WSDL',
         'Attachment':
             'https://webservices.24sevenoffice.com/Economy/Accounting/Accounting_V001/' +
