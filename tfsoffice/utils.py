@@ -17,6 +17,8 @@ def node_to_dict(node):
         return node
     elif type(node) is datetime.datetime:
         return node
+    elif type(node) is datetime.date:
+        return datetime.datetime.fromordinal(node.toordinal())
     elif type(node) is float:
         return node
     # elif type(node) is NoneType:
